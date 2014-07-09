@@ -14,7 +14,7 @@ class CurveMaker:
     parent.dependencies = []
     parent.contributors = ["Junichi Tokuda (BWH)"]
     parent.helpText = """
-    This module generates a 3D curve model that connects fiducials listed in a given markup node. 
+    This module generates a 3D curve model that connects fiducials listed in a given markup node.
     """
     parent.acknowledgementText = """
     This work was supported by National Center for Image Guided Therapy (P41EB015898). The module is based on a template developed by Jean-Christophe Fillion-Robin, Kitware Inc. and Steve Pieper, Isomics, Inc. partially funded by NIH grant 3P41RR013218-12S1.
@@ -129,7 +129,7 @@ class CurveMakerWidget:
 
     # Add vertical spacer
     self.layout.addStretch(1)
-    
+
   def cleanup(self):
     pass
 
@@ -187,13 +187,13 @@ class CurveMakerLogic:
 
       self.PolyData.SetPoints(points)
       self.PolyData.SetLines(cellArray)
-      
+
 
   def updateCurve(self, caller, event):
     if (caller.IsA('vtkMRMLMarkupsFiducialNode') and event == 'ModifiedEvent'):
 
       self.updatePoints()
-      
+
   def setTubeRadius(self, radius):
 
     self.TubeRadius = radius
@@ -214,7 +214,7 @@ class CurveMakerLogic:
       self.updatePoints()
 
       self.SplineFilter = vtk.vtkSplineFilter()
-      self.SplineFilter.SetInput(self.PolyData)
+      self.SplineFilter.SetInputData(self.PolyData)
       self.SplineFilter.SetNumberOfSubdivisions(20*self.PolyData.GetPoints().GetNumberOfPoints())
       self.SplineFilter.Update()
       self.TubeFilter = vtk.vtkTubeFilter()
@@ -229,7 +229,7 @@ class CurveMakerLogic:
         modelDisplayNode.SetColor(0.0,0.0,1.0)
         slicer.mrmlScene.AddNode(modelDisplayNode)
         destNode.SetAndObserveDisplayNodeID(modelDisplayNode.GetID())
-      
+
       destNode.SetAndObservePolyData(self.TubeFilter.GetOutput())
       destNode.Modified()
       slicer.mrmlScene.AddNode(destNode)
